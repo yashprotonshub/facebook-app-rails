@@ -5,6 +5,5 @@ class User < ApplicationRecord
     has_many :received_friend_requests, class_name: "Friendrequest", foreign_key: 'receiver_id'
     has_many :friend_request_senders, through: :received_friend_requests, source: :sender
 
-    #has_many :senders, through: :friendrequests
 end
 
