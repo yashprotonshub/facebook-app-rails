@@ -1,0 +1,35 @@
+<h1> You are currently logged in as <%= current_user.email %> </h1>
+
+<h2> ALl request </h2>
+<% for allrequests in @allrequests %>
+    <p>
+        <%= User.find(allrequests.sender_id).email %> <%= link_to "Accept", user_friendrequest_path(current_user, allrequests.id, friendrequest_id: allrequests.id ), method: :patch %> <%= link_to "Reject", user_friendrequest_path(current_user, allrequests.id, friendrequest_id: allrequests.id ), method: :delete %>
+    </p>
+<% end %>
+
+<h3> All Friends </h3>
+<% for allfriends in @allfriends %>
+    <p>
+        <%= User.find(allfriends).email %> <%= link_to "Remove Friend", user_friendrequest_remove_user_path( current_user, allfriends, friendrequest_id: allfriends ), method: :delete %>
+    </p>    
+<% end %> 
+<h4> All USers </h4>
+<% for allusers in @allusers %>
+    <% if allusers.id== current_user.id %>
+        <% next %>
+    <% else %>
+        <p>
+            <%= allusers.id %>
+            <%= allusers.email %> <%= link_to "send friend request", user_friendrequests_path( current_user.id, allusers.id, receiver: allusers.id ), method: :post %>
+        </p>
+    <% end %>
+
+<% end %>
+
+<br>
+<br>
+
+<%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+
+
+
