@@ -1,0 +1,28 @@
+you are currently logged in as <%= current_user.email %>
+<h1> <%= @post.title %> </h1>
+ 
+    <p>
+        <%= @post.body %>
+    </p>
+
+<h2> Comments </h2>
+<% for i in @allcomments %>
+    <p>
+        Name :- <%= User.find(i.user_id).email %> <br>
+        Comment :- <%= i.body %> <br>
+        <% if current_user.id==i.user_id %>
+            <%= link_to "Delete", user_post_comment_path(current_user, @post, i.id ), method: :delete, style: "text-decoration:none; " %>
+            <%= link_to "Edit", edit_user_post_comment_path(current_user, @post, i.id ), style: "text-decoration:none; " %>
+            
+            
+        <% end %> 
+    </p>
+<% end %>
+
+<%= form_with model:[ current_user, @post, @newcomment ] do |f| %>
+    
+    <div>
+        <%= f.text_field  :body  %> <%= f.submit "Comment"%>
+    </div>
+
+<% end %>
