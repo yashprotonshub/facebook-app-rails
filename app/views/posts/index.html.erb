@@ -33,7 +33,7 @@ You are Currently logged in as <%= current_user.email %> <br><br>
     <% else %>
         <p>
             <%= allusers.id %>
-            <%= allusers.email %> <%= link_to "send friend request", user_friendrequests_path( current_user.id, allusers.id, receiver: allusers.id ), method: :post %>
+            <%= allusers.email %> <%= link_to "send friend request", user_friendrequests_path( current_user.id, allusers.id, receiver: allusers.id ), method: :post, remote: true,  id: "friend_request_button" %>
         </p>
     <% end %>
 

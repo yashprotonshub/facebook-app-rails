@@ -35,7 +35,7 @@ class PostsController < ApplicationController
         @post=Post.find(params[:id])
         @pid=@post.id
         @allcomments=Post.find(@pid).comments
-        @newcomment=Post.find(@pid).comments.build
+        @newcomment=Post.find(@pid).comments.new
     end
     
     def destroy

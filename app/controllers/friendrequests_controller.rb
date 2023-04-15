@@ -1,7 +1,14 @@
 class FriendrequestsController < ApplicationController
+
+  respond_to :html, :json
+
   def create
-    @friend=Friendrequest.create(status:"pending", sender_id:current_user.id, receiver_id: params[:receiver])      
+    @friend=Friendrequest.new(status:"pending", sender_id:current_user.id, receiver_id: params[:receiver])
+    if @friend.save
+      respond_to(&:js)
+    end
   end
+
   def update
     @friend=Friendrequest.find(params[:friendrequest_id])
     @friend.update(status:"approved")

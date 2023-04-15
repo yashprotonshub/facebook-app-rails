@@ -6,20 +6,17 @@ you are currently logged in as <%= current_user.email %>
     </p>
 
 <h2> Comments </h2>
-<% for i in @allcomments %>
-    <p>
-        Name :- <%= User.find(i.user_id).email %> <br>
-        Comment :- <%= i.body %> <br>
-        <% if current_user.id==i.user_id %>
-            <%= link_to "Delete", user_post_comment_path(current_user, @post, i.id ), method: :delete, style: "text-decoration:none; " %>
-            <%= link_to "Edit", edit_user_post_comment_path(current_user, @post, i.id ), style: "text-decoration:none; " %>
-            
-            
-        <% end %> 
-    </p>
-<% end %>
+<div id="showing_comments">
+    <% @allcomments.each do |all_comment| %>
+        <%= render 'partials/all_comments', all_comment:all_comment %>
+            <% if current_user.id == all_comment.user_id %>
+                <%= link_to "Delete", user_post_comment_path(current_user, @pid, all_comment.id ), method: :delete, style: "text-decoration:none; " %>
+                <%= link_to "Edit", edit_user_post_comment_path(current_user, @post, all_comment.id ), style: "text-decoration:none; " %>
+            <% end %>
+    <% end %>
+</div>
 
-<%= form_with model:[ current_user, @post, @newcomment ] do |f| %>
+<%= form_with(model:[ current_user, @post, @newcomment ], local: false) do |f| %>
     
     <div>
         <%= f.text_field  :body  %> <%= f.submit "Comment"%>
